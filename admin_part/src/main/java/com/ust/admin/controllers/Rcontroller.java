@@ -22,6 +22,9 @@ public class Rcontroller {
 	@Autowired
 	private MenuRepo mrepo;
 
+	@Autowired
+	private ControllerConsumer controllerConsumer;
+
 	//@CrossOrigin
 //	@PostMapping("/create")
 //	public ResponseEntity<?> create(@RequestBody Restaurant rest){
@@ -29,6 +32,10 @@ public class Rcontroller {
 //
 //		return ResponseEntity.ok().body(rest1);
 //	}
+	@GetMapping("/addid/{id}")
+	public ResponseEntity<?> addid(@PathVariable Long id ){
+		return ResponseEntity.ok(controllerConsumer.getCourseId(id));
+	}
 
 	@PostMapping("/addmenu")
 	public ResponseEntity<?> addMenu(@RequestBody Menu menu){
