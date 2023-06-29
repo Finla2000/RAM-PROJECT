@@ -26,11 +26,34 @@ public class FooditemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCourse);
 
     }
-    @GetMapping("/{id}/topics")
+    @GetMapping("/topics/{id}")
     public ResponseEntity<List<Topic>> getCourseTopics(@PathVariable Long id) {
         List<Topic> topics = fooditemService.getCourseTopics(id);
         return ResponseEntity.ok(topics);
     }
+    @GetMapping("/fooditems/{foodid}/{topicid}")
+    public ResponseEntity<Topic> getFoodItemTopic(
+            @PathVariable Long foodid,
+            @PathVariable Long topicid
+    ) {
+        Fooditem fooditem = fooditemService.getFooditemById(foodid);
+
+        if (fooditem == null) {
+            // Food item with the specified ID not found
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Topic> topics = fooditem.getTopics();
+        for (Topic topic : topics) {
+            if (topic.getId().equals(topicid)) {
+                return ResponseEntity.ok(topic);
+            }
+        }
+
+        // Topic with the specified ID not found for the given food item
+        return ResponseEntity.notFound().build();
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Fooditem> getCourseId(@PathVariable Long id)

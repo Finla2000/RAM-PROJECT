@@ -26,6 +26,10 @@ public class FooditemService {
         return fooditemRepository.save(fooditem);
     }
 
+    public Fooditem getFooditemById(Long id) {
+        return fooditemRepository.findById(id).orElse(null);
+    }
+
     public List<Topic> getCourseTopics(Long id) {
         Optional<Fooditem> courseOptional = fooditemRepository.findById(id);
         if (courseOptional.isPresent()) {
